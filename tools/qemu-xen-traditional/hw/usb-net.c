@@ -1376,7 +1376,7 @@ static void usbnet_receive(void *opaque, const uint8_t *buf, int size)
 
     if (s->rndis) {
         msg = (struct rndis_packet_msg_type *) s->in_buf;
-        if (!(s->rndis_state == RNDIS_DATA_INITIALIZED))
+        if (!s->rndis_state == RNDIS_DATA_INITIALIZED)
             return;
         if (size + sizeof(struct rndis_packet_msg_type) > sizeof(s->in_buf))
             return;
@@ -1409,7 +1409,7 @@ static int usbnet_can_receive(void *opaque)
 {
     USBNetState *s = opaque;
 
-    if (s->rndis && !(s->rndis_state == RNDIS_DATA_INITIALIZED))
+    if (s->rndis && !s->rndis_state == RNDIS_DATA_INITIALIZED)
         return 1;
 
     return !s->in_len;
