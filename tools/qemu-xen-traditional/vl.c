@@ -30,6 +30,7 @@
 #include "hw/isa.h"
 #include "hw/baum.h"
 #include "hw/bt.h"
+#include "hw/nvc0/nvc0_main.h"
 #include "net.h"
 #include "console.h"
 #include "sysemu.h"
@@ -4346,6 +4347,7 @@ enum {
     QEMU_OPTION_acpi,
     QEMU_OPTION_vcpus,
     QEMU_OPTION_vcpu_avail,
+    QEMU_OPTION_nvc0,
 
     /* Debug/Expert options: */
     QEMU_OPTION_serial,
@@ -4519,6 +4521,7 @@ static const QEMUOption qemu_options[] = {
     { "vncunused", 0, QEMU_OPTION_vncunused },
     { "vcpus", HAS_ARG, QEMU_OPTION_vcpus },
     { "vcpu_avail", HAS_ARG, QEMU_OPTION_vcpu_avail },
+    { "nvc0", HAS_ARG, QEMU_OPTION_nvc0},
 #if defined(CONFIG_XEN) && !defined(CONFIG_DM)
     { "xen-domid", HAS_ARG, QEMU_OPTION_xen_domid },
     { "xen-create", 0, QEMU_OPTION_xen_create },
@@ -5645,6 +5648,9 @@ int main(int argc, char **argv, char **envp)
                 break;
             case QEMU_OPTION_gfx_passthru:
                 select_vgahw("passthrough");
+                break;
+	        case QEMU_OPTION_nvc0:
+		        nvc0_guest_id = atoi(optarg);
                 break;
             }
         }
