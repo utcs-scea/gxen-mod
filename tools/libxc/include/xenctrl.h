@@ -1040,6 +1040,14 @@ int xc_domain_set_virq_handler(xc_interface *xch, uint32_t domid, int virq);
 int xc_domain_set_max_evtchn(xc_interface *xch, uint32_t domid,
                              uint32_t max_port);
 
+/**
+ * @parm xch a handle to an open hypervisor interface
+ * @parm domid the domain id which will handle the VIRQ
+ * @parm gfn guest frame number
+ * return mfn on success, 0 on failure
+ */
+int xc_domain_gfn_to_mfn(xc_interface *xch, uint32_t domid, unsigned long gfn, unsigned long* mfn);
+
 /*
  * CPUPOOL MANAGEMENT FUNCTIONS
  */
