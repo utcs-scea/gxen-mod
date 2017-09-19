@@ -2436,6 +2436,10 @@ skip_usbdev:
             }
             libxl_defbool_set(&b_info->u.hvm.gfx_passthru, true);
         }
+        if (!xlu_cfg_get_long(config, "nvc0", &l, 0)) /* set nvc0 */
+            b_info->u.hvm.nvc0 = l;
+        else
+            b_info->u.hvm.nvc0 = -1;
         switch (xlu_cfg_get_list_as_string_list(config, "serial",
                                                 &b_info->u.hvm.serial_list,
                                                 1))

@@ -636,6 +636,10 @@ static int libxl__build_device_model_args_old(libxl__gc *gc,
                 return ERROR_INVAL;
             }
         }
+        if (b_info->u.hvm.nvc0 >= 0) {
+            flexarray_vappend(dm_args, "-nvc0",
+                              GCSPRINTF("%d", b_info->u.hvm.nvc0), NULL);
+        }
     } else {
         if (!sdl && !vnc)
             flexarray_append(dm_args, "-nographic");
@@ -1245,6 +1249,10 @@ static int libxl__build_device_model_args_new(libxl__gc *gc,
         if ( ioemu_nics == 0 ) {
             flexarray_append(dm_args, "-net");
             flexarray_append(dm_args, "none");
+        }
+        if (b_info->u.hvm.nvc0 >= 0) {
+            flexarray_vappend(dm_args, "-nvc0",
+                              GCSPRINTF("%d", b_info->u.hvm.nvc0), NULL);
         }
     } else {
         if (!sdl && !vnc) {

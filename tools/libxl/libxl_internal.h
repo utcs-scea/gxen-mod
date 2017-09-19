@@ -1379,6 +1379,7 @@ _hidden int libxl__pci_topology_init(libxl__gc *gc,
 /* from libxl_pci */
 
 _hidden int libxl__device_pci_add(libxl__gc *gc, uint32_t domid, libxl_device_pci *pcidev, int starting);
+_hidden int libxl__device_pci_add_with_nvc0(libxl__gc *gc, uint32_t domid, libxl_device_pci *pcidev, int starting, int nvc0);
 _hidden int libxl__create_pci_backend(libxl__gc *gc, uint32_t domid,
                                       libxl_device_pci *pcidev, int num);
 _hidden int libxl__device_pci_destroy_all(libxl__gc *gc, uint32_t domid);

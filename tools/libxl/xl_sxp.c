@@ -136,6 +136,7 @@ void printf_info_sexp(int domid, libxl_domain_config *d_config, FILE *fh)
         fprintf(fh, "\t\t\t(device_model %s)\n", b_info->device_model ? : "default");
         fprintf(fh, "\t\t\t(gfx_passthru %s)\n",
                libxl_defbool_to_string(b_info->u.hvm.gfx_passthru));
+        fprintf(fh, "\t\t\t(nvc0 %d)\n", b_info->u.hvm.nvc0);
         fprintf(fh, "\t\t\t(serial %s)\n", b_info->u.hvm.serial);
         fprintf(fh, "\t\t\t(boot %s)\n", b_info->u.hvm.boot);
         fprintf(fh, "\t\t\t(usb %s)\n", libxl_defbool_to_string(b_info->u.hvm.usb));

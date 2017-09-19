@@ -1191,7 +1191,7 @@ static int libxl_pcidev_assignable(libxl_ctx *ctx, libxl_device_pci *pcidev)
     return i != num;
 }
 
-int libxl__device_pci_add(libxl__gc *gc, uint32_t domid, libxl_device_pci *pcidev, int starting)
+int libxl__device_pci_add_with_nvc0(libxl__gc *gc, uint32_t domid, libxl_device_pci *pcidev, int starting, int nvc0)
 {
     libxl_ctx *ctx = libxl__gc_owner(gc);
     unsigned int orig_vdev, pfunc_mask;
@@ -1211,33 +1211,35 @@ int libxl__device_pci_add(libxl__gc *gc, uint32_t domid, libxl_device_pci *pcide
         }
     }
 
-    rc = libxl__device_pci_setdefault(gc, pcidev);
-    if (rc) goto out;
+    if (!nvc0) {
+        rc = libxl__device_pci_setdefault(gc, pcidev);
+        if (rc) goto out;
 
-    if (pcidev->seize && !pciback_dev_is_assigned(gc, pcidev)) {
-        rc = libxl__device_pci_assignable_add(gc, pcidev, 1);
-        if ( rc )
+        if (pcidev->seize && !pciback_dev_is_assigned(gc, pcidev)) {
+            rc = libxl__device_pci_assignable_add(gc, pcidev, 1);
+            if ( rc )
+                goto out;
+        }
+
+        if (!libxl_pcidev_assignable(ctx, pcidev)) {
+            LOG(ERROR, "PCI device %x:%x:%x.%x is not assignable",
+                pcidev->domain, pcidev->bus, pcidev->dev, pcidev->func);
+            rc = ERROR_FAIL;
             goto out;
-    }
+        }
 
-    if (!libxl_pcidev_assignable(ctx, pcidev)) {
-        LOG(ERROR, "PCI device %x:%x:%x.%x is not assignable",
-            pcidev->domain, pcidev->bus, pcidev->dev, pcidev->func);
-        rc = ERROR_FAIL;
-        goto out;
-    }
-
-    rc = get_all_assigned_devices(gc, &assigned, &num_assigned);
-    if ( rc ) {
-        LOG(ERROR,
-            "cannot determine if device is assigned, refusing to continue");
-        goto out;
-    }
-    if ( is_pcidev_in_array(assigned, num_assigned, pcidev->domain,
-                     pcidev->bus, pcidev->dev, pcidev->func) ) {
-        LOG(ERROR, "PCI device already attached to a domain");
-        rc = ERROR_FAIL;
-        goto out;
+        rc = get_all_assigned_devices(gc, &assigned, &num_assigned);
+        if ( rc ) {
+            LOG(ERROR,
+                "cannot determine if device is assigned, refusing to continue");
+            goto out;
+        }
+        if ( is_pcidev_in_array(assigned, num_assigned, pcidev->domain,
+                         pcidev->bus, pcidev->dev, pcidev->func) ) {
+            LOG(ERROR, "PCI device already attached to a domain");
+            rc = ERROR_FAIL;
+            goto out;
+        }
     }
 
     libxl__device_pci_reset(gc, pcidev->domain, pcidev->bus, pcidev->dev, pcidev->func);
@@ -1288,6 +1290,11 @@ int libxl__device_pci_add(libxl__gc *gc, uint32_t domid, libxl_device_pci *pcide
 
 out:
     return rc;
+}
+
+int libxl__device_pci_add(libxl__gc *gc, uint32_t domid, libxl_device_pci *pcidev, int starting)
+{
+    return libxl__device_pci_add_with_nvc0(gc, domid, pcidev, starting, 0);
 }
 
 static void libxl__add_pcidevs(libxl__egc *egc, libxl__ao *ao, uint32_t domid,
