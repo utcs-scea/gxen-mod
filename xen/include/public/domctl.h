@@ -914,6 +914,13 @@ struct xen_domctl_set_virq_handler {
 typedef struct xen_domctl_set_virq_handler xen_domctl_set_virq_handler_t;
 DEFINE_XEN_GUEST_HANDLE(xen_domctl_set_virq_handler_t);
 
+struct xen_domctl_gfn_to_mfn {
+    uint64_t gfn;
+    uint64_t mfn;
+};
+typedef struct xen_domctl_gfn_to_mfn xen_domctl_gfn_to_mfn_t;
+DEFINE_XEN_GUEST_HANDLE(xen_domctl_gfn_to_mfn_t);
+
 #if defined(__i386__) || defined(__x86_64__)
 /* XEN_DOMCTL_setvcpuextstate */
 /* XEN_DOMCTL_getvcpuextstate */
@@ -1221,6 +1228,7 @@ struct xen_domctl {
 #define XEN_DOMCTL_monitor_op                    77
 #define XEN_DOMCTL_psr_cat_op                    78
 #define XEN_DOMCTL_soft_reset                    79
+#define XEN_DOMCTL_gfn_to_mfn                    80
 #define XEN_DOMCTL_gdbsx_guestmemio            1000
 #define XEN_DOMCTL_gdbsx_pausevcpu             1001
 #define XEN_DOMCTL_gdbsx_unpausevcpu           1002
@@ -1273,6 +1281,7 @@ struct xen_domctl {
         struct xen_domctl_set_access_required access_required;
         struct xen_domctl_audit_p2m         audit_p2m;
         struct xen_domctl_set_virq_handler  set_virq_handler;
+        struct xen_domctl_gfn_to_mfn        gfn_to_mfn;
         struct xen_domctl_set_max_evtchn    set_max_evtchn;
         struct xen_domctl_gdbsx_memio       gdbsx_guest_memio;
         struct xen_domctl_set_broken_page_p2m set_broken_page_p2m;
