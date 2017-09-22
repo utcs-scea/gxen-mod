@@ -1306,7 +1306,9 @@ static void libxl__add_pcidevs(libxl__egc *egc, libxl__ao *ao, uint32_t domid,
     int i, rc = 0;
 
     for (i = 0; i < d_config->num_pcidevs; i++) {
-        rc = libxl__device_pci_add(gc, domid, &d_config->pcidevs[i], 1);
+        // TODO: we should check target device is NVC0
+        rc = libxl__device_pci_add_with_nvc0(gc, domid, &d_config->pcidevs[i],
+                1, d_config->b_info.u.hvm.nvc0 >= 0);
         if (rc < 0) {
             LOG(ERROR, "libxl_device_pci_add failed: %d", rc);
             goto out;
