@@ -1,7 +1,8 @@
 #ifndef HW_NVC0_NVC0_H_
 #define HW_NVC0_NVC0_H_
 
-#include <pciaccess.h>
+#include "pciaccess.h"
+
 #include <stdint.h>
 #include <stdio.h>
 #include <stddef.h>
