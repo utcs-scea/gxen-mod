@@ -33,6 +33,7 @@
 #include "nvc0.h"
 #include "nvc0_ioport.h"
 #include "nvc0_mmio.h"
+#include "nvc0_main.h"
 
 long nvc0_guest_id = -1;
 

@@ -35,14 +35,14 @@
 extern "C" uint32_t nvc0_api_mmio_bar5_readb(void *opaque, target_phys_addr_t addr) {
     nvc0_state_t* state = nvc0_state(opaque);
     const target_phys_addr_t offset = addr - state->bar[4].addr;
-    NVC0_PRINTF("read 0x%"PRIx64"\n", (uint64_t)offset);
+    NVC0_PRINTF("read 0x%" PRIx64 "\n", (uint64_t)offset);
     return 0;
 }
 
 extern "C" uint32_t nvc0_api_mmio_bar5_readw(void *opaque, target_phys_addr_t addr) {
     nvc0_state_t* state = nvc0_state(opaque);
     const target_phys_addr_t offset = addr - state->bar[4].addr;
-    NVC0_PRINTF("read 0x%"PRIx64"\n", (uint64_t)offset);
+    NVC0_PRINTF("read 0x%" PRIx64 "\n", (uint64_t)offset);
     return 0;
 }
 
@@ -55,13 +55,13 @@ extern "C" uint32_t nvc0_api_mmio_bar5_readd(void *opaque, target_phys_addr_t ad
 extern "C" void nvc0_api_mmio_bar5_writeb(void *opaque, target_phys_addr_t addr, uint32_t val) {
     nvc0_state_t* state = nvc0_state(opaque);
     const target_phys_addr_t offset = addr - state->bar[4].addr;
-    NVC0_PRINTF("write 0x%"PRIx64" <= 0x%"PRIx64"\n", (uint64_t)offset, (uint64_t)val);
+    NVC0_PRINTF("write 0x%" PRIx64 " <= 0x%" PRIx64 "\n", (uint64_t)offset, (uint64_t)val);
 }
 
 extern "C" void nvc0_api_mmio_bar5_writew(void *opaque, target_phys_addr_t addr, uint32_t val) {
     nvc0_state_t* state = nvc0_state(opaque);
     const target_phys_addr_t offset = addr - state->bar[4].addr;
-    NVC0_PRINTF("write 0x%"PRIx64" <= 0x%"PRIx64"\n", (uint64_t)offset, (uint64_t)val);
+    NVC0_PRINTF("write 0x%" PRIx64 " <= 0x%" PRIx64 "\n", (uint64_t)offset, (uint64_t)val);
 }
 
 extern "C" void nvc0_api_mmio_bar5_writed(void *opaque, target_phys_addr_t addr, uint32_t val) {

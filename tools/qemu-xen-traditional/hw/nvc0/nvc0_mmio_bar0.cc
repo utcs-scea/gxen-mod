@@ -170,7 +170,7 @@ extern "C" uint32_t nvc0_mmio_bar0_readd(void *opaque, target_phys_addr_t addr) 
 
         if (NV_PROM_OFFSET <= cmd.offset && cmd.offset < (NV_PROM_OFFSET + sizeof(nvc0_vbios))) {
             ret = nvc0_read32(state->bar[0].space + cmd.offset);
-            NVC0_LOG(state, "read PROM 0x%"PRIx64" => 0x%"PRIx64"\n", (uint64_t)offset, (uint64_t)ret);
+            NVC0_LOG(state, "read PROM 0x%" PRIx64 " => 0x%" PRIx64 "\n", (uint64_t)offset, (uint64_t)ret);
             return ret;
         }
 
@@ -178,7 +178,7 @@ extern "C" uint32_t nvc0_mmio_bar0_readd(void *opaque, target_phys_addr_t addr) 
     }
 
 end:
-    NVC0_LOG(state, "read 0x%"PRIx64" => 0x%"PRIx64"\n", (uint64_t)offset, (uint64_t)ret);
+    NVC0_LOG(state, "read 0x%" PRIx64 " => 0x%" PRIx64 "\n", (uint64_t)offset, (uint64_t)ret);
 
     return ret;
 }
@@ -188,7 +188,7 @@ extern "C" void nvc0_mmio_bar0_writed(void *opaque, target_phys_addr_t addr, uin
     nvc0::context* ctx = nvc0::context::extract(state);
     const target_phys_addr_t offset = addr - state->bar[0].addr;
 
-    NVC0_LOG(state, "write 0x%"PRIx64" <= 0x%"PRIx64"\n", (uint64_t)offset, (uint64_t)val);
+    NVC0_LOG(state, "write 0x%" PRIx64 " <= 0x%" PRIx64 "\n", (uint64_t)offset, (uint64_t)val);
 
     switch (offset) {
     case 0x00000000:
