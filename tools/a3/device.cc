@@ -27,7 +27,7 @@
 #include <sched.h>
 #include <boost/asio.hpp>
 #include <boost/thread.hpp>
-#include <boost/pool/detail/singleton.hpp>
+#include <boost/container/detail/singleton.hpp>
 #include <pciaccess.h>
 #include "a3.h"
 #include "xen.h"
@@ -323,7 +323,7 @@ void device_t::write_pmem(uint64_t addr, uint32_t val, std::size_t size) {
 }
 
 device_t* device() {
-    return &boost::details::pool::singleton_default<device_t>::instance();
+    return &boost::container::container_detail::singleton_default<device_t>::instance();
 }
 
 }  // namespace a3

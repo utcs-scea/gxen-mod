@@ -143,4 +143,5 @@ target_link_libraries(a3
     pthread
     xenlight
     xenctrl
+    xentoollog
     )
