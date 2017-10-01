@@ -1,0 +1,34 @@
+firmware = "/usr/local/lib/xen/boot/hvmloader"
+
+builder = 'hvm'
+memory = 4096
+name = "mesa"
+vcpus = 2
+
+disk = ['file:/data/vm/xendisk_mesa.img,hda,w', 'tap:aio:/data/hyu/os/ubuntu-16.04.3-server-amd64.iso,hdc:cdrom,r']
+boot = 'cda'
+
+device_model_version = 'qemu-xen-traditional'
+device_model_override = '/usr/local/lib/xen/bin/qemu-dm'
+
+vif = ['type=ioemu, bridge=virbr0, ip=192.168.122.95' ]
+
+#sdl = 0
+#vnc = 0
+vnc = 1
+vncpasswd = ''
+vncconsole = 1
+serial = 'pty'
+#acpi = 1
+
+# GXen
+nvc0 = '0'
+#nographic = 1
+iommu = 0
+#xen_platform_pci = 1
+
+#vga = 'none'
+
+#gfx_passthru = 1
+#pci = ['03:00.0', '03:00.1']
+#pci_permissive = 1
